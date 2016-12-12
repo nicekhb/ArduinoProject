@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.sds.study.arduinoproject.MainActivity">
+    <item
+        android:id="@+id/action_service"
+        android:orderInCategory="100"
+        android:title="@string/action_service"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_stopservice"
+        android:orderInCategory="100"
+        android:title="@string/action_stopservice"
+        app:showAsAction="never" />
+</menu>

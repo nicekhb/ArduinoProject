@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ArduinoProject</string>
+    <string name="action_service">Service</string>
+    <string name="action_stopservice">Stop Service</string>
+</resources>
