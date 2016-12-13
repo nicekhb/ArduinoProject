@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mPager = (ViewPager) findViewById(R.id.container);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+        mPager.setPageTransformer(true, new ZoomOutPageTransformer());
 
         fragments = new Fragment[NUM_PAGES];
         fragments[0] = new MainFragment();
@@ -52,20 +53,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int id = item.getItemId();
 
         if (id == R.id.action_service) {
-            //startService();
-           /* FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.container, fragments[0]);
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            transaction.addToBackStack(null);
-            transaction.commit();*/
+            startService();
             return true;
         }else if (id == R.id.action_stopservice) {
-            //stopService();
-            /*FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.container, fragments[1]);
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            transaction.addToBackStack(null);
-            transaction.commit();*/
+            stopService();
+            Snackbar.make(getWindow().getDecorView().getRootView(), "안돼더라고,,앱을 완전 종료해라", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             return true;
         }
 
@@ -73,26 +65,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onClick(View view) {
-        //Snackbar.make(view, "도움말 따윈 없다", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-        /*FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, fragments[1]);
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.addToBackStack(null);
-        transaction.commit();*/
+        mPager.setCurrentItem(1);
     }
 
     @Override
     public void onBackPressed() {
         if (mPager.getCurrentItem() == 0) {
-            // If the user is currently looking at the first step, allow the system to handle the
-            // Back button. This calls finish() on this activity and pops the back stack.
             super.onBackPressed();
         } else {
-            // Otherwise, select the previous step.
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
         }
     }
-
 
     public void startService(){
         Intent intent = new Intent(this, AlertService.class);
