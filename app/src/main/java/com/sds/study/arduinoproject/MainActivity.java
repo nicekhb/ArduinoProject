@@ -58,18 +58,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return true;
         }else if (id == android.R.id.home) {
             mPager.setCurrentItem(0);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            getSupportActionBar().setDisplayShowHomeEnabled(false);
+            setBackButton(false);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    public void setBackButton(boolean isShow){
+        getSupportActionBar().setDisplayHomeAsUpEnabled(isShow);
+        getSupportActionBar().setDisplayShowHomeEnabled(isShow);
+    }
+
     public void onClick(View view) {
         mPager.setCurrentItem(1);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        setBackButton(true);
     }
 
     @Override
