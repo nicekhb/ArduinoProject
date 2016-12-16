@@ -56,6 +56,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             stopService();
             Snackbar.make(getWindow().getDecorView().getRootView(), "안돼더라고,,앱을 완전 종료해라", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             return true;
+        }else if (id == android.R.id.home) {
+            mPager.setCurrentItem(0);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -63,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onClick(View view) {
         mPager.setCurrentItem(1);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override
