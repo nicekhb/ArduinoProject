@@ -4,9 +4,43 @@
     android:layout_height="match_parent"
     android:background="#ddffdd">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RadioGroup android:id="@+id/toggleGroup"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="sub fragment"/>
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+
+        <ToggleButton
+            android:id="@+id/togglebutton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button_background"
+            android:textOff="어깨"
+            android:textOn="어깨" />
+        <ToggleButton
+            android:id="@+id/togglebutton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button_background"
+            android:textOff="가슴"
+            android:textOn="가슴" />
+        <ToggleButton
+            android:id="@+id/togglebutton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button_background"
+            android:textOff="배"
+            android:textOn="배" />
+        <ToggleButton
+            android:id="@+id/togglebutton4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button_background"
+            android:textOff="다리"
+            android:textOn="다리" />
+
+    </RadioGroup>
 
 </LinearLayout>

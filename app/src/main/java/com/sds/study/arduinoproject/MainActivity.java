@@ -14,8 +14,13 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+    FloatingActionButton fab;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
+    final int MAIN = 0;
+    final int SUB = 1;
+    final int EXERCISE = 2;
+    int cPage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
     }
 
@@ -57,8 +62,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Snackbar.make(getWindow().getDecorView().getRootView(), "안돼더라고,,앱을 완전 종료해라", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             return true;
         }else if (id == android.R.id.home) {
-            mPager.setCurrentItem(0);
-            setBackButton(false);
+            switch (cPage){
+                case MAIN:
+                    break;
+                case SUB:
+                    cPage = MAIN;
+                    mPager.setCurrentItem(cPage);
+                    setBackButton(false);
+                    break;
+                case EXERCISE:
+                    cPage = SUB;
+                    mPager.setCurrentItem(cPage);
+                    fab.show();
+                    break;
+            }
             return true;
         }
 
@@ -71,16 +88,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onClick(View view) {
-        mPager.setCurrentItem(1);
-        setBackButton(true);
+        switch (cPage){
+            case MAIN:
+                cPage = SUB;
+                mPager.setCurrentItem(cPage);
+                setBackButton(true);
+                break;
+            case SUB:
+                cPage = EXERCISE;
+                mPager.setCurrentItem(cPage);
+                fab.hide();
+                break;
+            case EXERCISE:
+                break;
+        }
     }
 
     @Override
     public void onBackPressed() {
-        if (mPager.getCurrentItem() == 0) {
+        /*if (mPager.getCurrentItem() == 0) {
             super.onBackPressed();
         } else {
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+        }*/
+        switch (cPage){
+            case MAIN:break;
+            case SUB:
+                cPage = MAIN;
+                mPager.setCurrentItem(cPage);
+                setBackButton(false);
+                break;
+            case EXERCISE:
+                cPage = SUB;
+                mPager.setCurrentItem(cPage);
+                fab.show();
+                break;
         }
     }
 
