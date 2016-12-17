@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="main fragment"/>
+        android:text="메인. 화면구성???"/>
 
     <com.sds.study.arduinoproject.CircularProgressBar
         style="@style/Widget.ProgressBar.Holo.CircularProgressBar"
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="50dp"
         android:id="@+id/progressBar"
-        circular:cpb_subtitle="subtitle"
-        circular:cpb_title="Title"/>
+        circular:cpb_subtitle=""
+        circular:cpb_title=""/>
 
 </LinearLayout>

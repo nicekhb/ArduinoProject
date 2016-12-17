@@ -4,6 +4,11 @@
     android:layout_height="match_parent"
     android:background="#ddffdd">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="여긴 뭐가 나와야하지.. 대체 모르것소..."/>
+
     <RadioGroup android:id="@+id/toggleGroup"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

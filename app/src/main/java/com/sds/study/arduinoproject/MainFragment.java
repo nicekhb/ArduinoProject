@@ -34,7 +34,7 @@ public class MainFragment extends Fragment {
 
             @Override
             public void onAnimationFinish() {
-                progressBar.setSubTitle("done");
+                progressBar.setSubTitle("화이팅!!");
             }
         };
         progressBar.animateProgressTo(0, 77, progressAnimationListener);
