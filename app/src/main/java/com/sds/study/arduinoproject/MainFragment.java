@@ -13,14 +13,31 @@ import android.widget.ProgressBar;
  */
 
 public class MainFragment extends Fragment {
-    ProgressBar progressBar;
+    CircularProgressBar progressBar;
+    CircularProgressBar.ProgressAnimationListener progressAnimationListener;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View result = inflater.inflate(R.layout.main_fragment, container, false);
-        progressBar = (ProgressBar)result.findViewById(R.id.progressBar);
-        progressBar.setProgress(82);
+        progressBar = (CircularProgressBar)result.findViewById(R.id.progressBar);
+        //progressBar.setProgress(77);
+        progressAnimationListener = new CircularProgressBar.ProgressAnimationListener() {
+            @Override
+            public void onAnimationStart() {
+            }
+
+            @Override
+            public void onAnimationProgress(int progress) {
+                progressBar.setTitle(progress + "%");
+            }
+
+            @Override
+            public void onAnimationFinish() {
+                progressBar.setSubTitle("done");
+            }
+        };
+        progressBar.animateProgressTo(0, 77, progressAnimationListener);
         return result;
     }
 }

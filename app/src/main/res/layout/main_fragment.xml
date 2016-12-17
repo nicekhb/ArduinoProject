@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:circular="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffdd">
@@ -9,10 +10,13 @@
         android:layout_height="wrap_content"
         android:text="main fragment"/>
 
-    <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
+    <com.sds.study.arduinoproject.CircularProgressBar
+        style="@style/Widget.ProgressBar.Holo.CircularProgressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/progressBar" />
+        android:layout_margin="50dp"
+        android:id="@+id/progressBar"
+        circular:cpb_subtitle="subtitle"
+        circular:cpb_title="Title"/>
 
 </LinearLayout>
