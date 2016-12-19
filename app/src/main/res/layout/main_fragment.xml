@@ -5,11 +5,6 @@
     android:layout_height="match_parent"
     android:background="#ffffdd">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="메인. 화면구성???"/>
-
     <com.sds.study.arduinoproject.CircularProgressBar
         style="@style/Widget.ProgressBar.CircularProgressBar"
         android:layout_width="match_parent"
