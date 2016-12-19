@@ -25,7 +25,8 @@ public class DepthPageTransformer implements ViewPager.PageTransformer {
         } else if (position <= 1) {
             view.setAlpha(1 - position);
 
-            view.setTranslationX(pageWidth * -position);
+            //view.setTranslationX(pageWidth * -position);
+            view.setTranslationX(-1 * view.getWidth() * position);
 
             float scaleFactor = MIN_SCALE
                     + (1 - MIN_SCALE) * (1 - Math.abs(position));
