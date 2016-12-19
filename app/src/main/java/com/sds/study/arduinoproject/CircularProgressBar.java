@@ -14,6 +14,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -73,31 +74,31 @@ public class CircularProgressBar extends ProgressBar {
                 R.styleable.CircularProgressBar, style, 0);
 
         String color;
-        Resources res = getResources();
+        //Resources res = getResources();
 
         this.mHasShadow = a.getBoolean(R.styleable.CircularProgressBar_cpb_hasShadow, true);
 
         color = a.getString(R.styleable.CircularProgressBar_cpb_progressColor);
         if (color == null)
-            mProgressColorPaint.setColor(res.getColor(R.color.circular_progress_default_progress));
+            mProgressColorPaint.setColor(ContextCompat.getColor(getContext(), R.color.circular_progress_default_progress));
         else
             mProgressColorPaint.setColor(Color.parseColor(color));
 
         color = a.getString(R.styleable.CircularProgressBar_cpb_backgroundColor);
         if (color == null)
-            mBackgroundColorPaint.setColor(res.getColor(R.color.circular_progress_default_background));
+            mBackgroundColorPaint.setColor(ContextCompat.getColor(getContext(), R.color.circular_progress_default_background));
         else
             mBackgroundColorPaint.setColor(Color.parseColor(color));
 
         color = a.getString(R.styleable.CircularProgressBar_cpb_titleColor);
         if (color == null)
-            mTitlePaint.setColor(res.getColor(R.color.circular_progress_default_title));
+            mTitlePaint.setColor(ContextCompat.getColor(getContext(), R.color.circular_progress_default_title));
         else
             mTitlePaint.setColor(Color.parseColor(color));
 
         color = a.getString(R.styleable.CircularProgressBar_cpb_subtitleColor);
         if (color == null)
-            mSubtitlePaint.setColor(res.getColor(R.color.circular_progress_default_subtitle));
+            mSubtitlePaint.setColor(ContextCompat.getColor(getContext(), R.color.circular_progress_default_subtitle));
         else
             mSubtitlePaint.setColor(Color.parseColor(color));
 
