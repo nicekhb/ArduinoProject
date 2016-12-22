@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     final int MAIN = 0;
     final int SUB = 1;
     final int EXERCISE = 2;
+    final int Running = 3;
+    final int MAP = 4;
     int cPage = 0;
 
     @Override
@@ -63,19 +65,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Snackbar.make(getWindow().getDecorView().getRootView(), "안돼더라고,,앱을 완전 종료해라", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             return true;
         }else if (id == android.R.id.home) {
-            switch (cPage){
-                case MAIN:
-                    break;
-                case SUB:
-                    cPage = MAIN;
-                    mPager.setCurrentItem(cPage);
-                    setBackButton(false);
-                    break;
-                case EXERCISE:
-                    cPage = SUB;
-                    mPager.setCurrentItem(cPage);
-                    fab.show();
-                    break;
+            if(((MainFragment)(((ScreenSlidePagerAdapter)mPagerAdapter).fragments[MAIN])).isRunMode) {
+                switch (cPage) {
+                    case Running:
+                        cPage = MAIN;
+                        mPager.setCurrentItem(cPage);
+                        setBackButton(false);
+                        break;
+                    case MAP:
+                        cPage = Running;
+                        mPager.setCurrentItem(cPage);
+                        fab.show();
+                        break;
+                }
+            }else{
+                switch (cPage) {
+                    case MAIN:
+                        break;
+                    case SUB:
+                        cPage = MAIN;
+                        mPager.setCurrentItem(cPage);
+                        setBackButton(false);
+                        break;
+                    case EXERCISE:
+                        cPage = SUB;
+                        mPager.setCurrentItem(cPage);
+                        fab.show();
+                        break;
+                }
             }
             return true;
         }
@@ -89,19 +106,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onClick(View view) {
-        switch (cPage){
-            case MAIN:
-                cPage = SUB;
-                mPager.setCurrentItem(cPage);
-                setBackButton(true);
-                break;
-            case SUB:
-                cPage = EXERCISE;
-                mPager.setCurrentItem(cPage);
-                fab.hide();
-                break;
-            case EXERCISE:
-                break;
+        if(((MainFragment)(((ScreenSlidePagerAdapter)mPagerAdapter).fragments[MAIN])).isRunMode) {
+            switch (cPage) {
+                case MAIN:
+                    cPage = Running;
+                    mPager.setCurrentItem(cPage);
+                    setBackButton(true);
+                    break;
+                case Running:
+                    cPage = MAP;
+                    mPager.setCurrentItem(cPage);
+                    fab.hide();
+                    break;
+            }
+        }else{
+            switch (cPage) {
+                case MAIN:
+                    cPage = SUB;
+                    mPager.setCurrentItem(cPage);
+                    setBackButton(true);
+                    break;
+                case SUB:
+                    cPage = EXERCISE;
+                    mPager.setCurrentItem(cPage);
+                    fab.hide();
+                    break;
+                case EXERCISE:
+                    break;
+            }
         }
     }
 

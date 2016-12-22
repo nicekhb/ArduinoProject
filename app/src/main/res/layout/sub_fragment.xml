@@ -1,51 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ddffdd">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#ddffdd"
+              android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="여긴 뭐가 나와야하지.. 대체 모르것소..."/>
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:orientation="vertical">
 
-    <RadioGroup android:id="@+id/toggleGroup"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="오늘의 운동계획"
+            android:textSize="30sp"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/et_bast"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="가슴운동 10개하기"
+            android:textSize="15sp"/>
+
+        <EditText
+            android:id="@+id/et_low"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="하체운동 10개하기"
+            android:textSize="15sp"/>
+
+        <EditText
+            android:id="@+id/et_body"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="배운동 10개하기"
+            android:textSize="15sp"/>
+
+        <EditText
+            android:id="@+id/et_back"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="등운동 10개하기"
+            android:textSize="15sp"/>
+
+        <EditText
+            android:id="@+id/et_leg"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="다리운동 10개하기"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/toggleGroup"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:orientation="horizontal"
         android:gravity="center"
-        >
+        android:orientation="horizontal">
+
 
         <ToggleButton
             android:id="@+id/togglebutton1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_button_background"
-            android:textOff="어깨"
-            android:textOn="어깨" />
+            android:textOff="가슴"
+            android:textOn="가슴"/>
+
         <ToggleButton
             android:id="@+id/togglebutton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_button_background"
-            android:textOff="가슴"
-            android:textOn="가슴" />
+            android:textOff="하체"
+            android:textOn="하체"/>
+
         <ToggleButton
             android:id="@+id/togglebutton3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_button_background"
             android:textOff="배"
-            android:textOn="배" />
+            android:textOn="배"/>
+
         <ToggleButton
             android:id="@+id/togglebutton4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_button_background"
+            android:textOff="등"
+            android:textOn="등"/>
+
+        <ToggleButton
+            android:id="@+id/togglebutton5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button_background"
             android:textOff="다리"
-            android:textOn="다리" />
+            android:textOn="다리"/>
 
     </RadioGroup>
-
 </LinearLayout>

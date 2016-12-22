@@ -13,10 +13,12 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
     public ScreenSlidePagerAdapter(FragmentManager fm) {
         super(fm);
-        fragments = new Fragment[3];
+        fragments = new Fragment[5];
         fragments[0] = new MainFragment();
         fragments[1] = new SubFragment();
         fragments[2] = new ExerciseFragment();
+        fragments[3] = new RunFragment();
+        fragments[4] = new MapFragment();
     }
 
     @Override
