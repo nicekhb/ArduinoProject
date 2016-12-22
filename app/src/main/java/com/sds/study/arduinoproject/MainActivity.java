@@ -17,12 +17,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FloatingActionButton fab;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
-    final int MAIN = 0;
-    final int SUB = 1;
-    final int EXERCISE = 2;
-    final int Running = 3;
-    final int MAP = 4;
-    int cPage = 0;
+    final int MAIN = 2;
+    final int SUB = 3;
+    final int EXERCISE = 4;
+    final int Running = 1;
+    final int MAP = 0;
+    int cPage = MAIN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
             }
         });
+
+        mPager.setCurrentItem(cPage);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
