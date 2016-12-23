@@ -23,9 +23,11 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.sds.study.arduinoproject.ScreenSlidePagerAdapter.RUNNING;
+
 public class GPSMapAsync extends AsyncTask<String, Void, String> {
     String TAG;
-    MainActivity mainActivity;
+    RunFragment runFragment;
     URL url;
     HttpURLConnection con;
     TextView txt_date;
@@ -38,13 +40,11 @@ public class GPSMapAsync extends AsyncTask<String, Void, String> {
     PolylineOptions polyOptions;
     Location lastLocation;
     SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-    RunFragment runFragment;
 
     public GPSMapAsync(MainActivity mainActivity) {
         TAG = this.getClass().getName();
-        this.mainActivity = mainActivity;
        //lastLocation = mainActivity.lastLocation;
-       //runFragment = mainActivity.runFragment;
+       runFragment = (RunFragment)(((ScreenSlidePagerAdapter)mainActivity.mPagerAdapter).fragments[RUNNING]);
        if (lastLocation != null) {
             Long currentTime = System.currentTimeMillis();
             Log.d(TAG,"currentTIme??"+ currentTime.toString());
@@ -67,8 +67,8 @@ public class GPSMapAsync extends AsyncTask<String, Void, String> {
     }
 
     protected String doInBackground(String... params) {
-        BufferedReader bffr=null;
-        BufferedWriter bffw=null;
+        BufferedReader bffr = null;
+        BufferedWriter bffw = null;
         StringBuffer sb = null;
 
         try {
@@ -143,11 +143,11 @@ public class GPSMapAsync extends AsyncTask<String, Void, String> {
     }
 
     public void setFragmentData(String date,String time, String lat, String lng){
-        //txt_date=mainActivity.runFragment.txt_date;
-        //txt_time = mainActivity.runFragment.txt_time;
-        //txt_lat=mainActivity.runFragment.txt_lat;
-        //txt_lng = mainActivity.runFragment.txt_lng;
-        //txt_per = mainActivity.runFragment.txt_per;
+        txt_date = runFragment.txt_date;
+        txt_time = runFragment.txt_time;
+        txt_lat = runFragment.txt_lat;
+        txt_lng = runFragment.txt_lng;
+        txt_per = runFragment.txt_per;
 
         txt_date.setText(date);
         txt_time.setText(time);

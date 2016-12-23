@@ -22,7 +22,7 @@ import static com.sds.study.arduinoproject.ScreenSlidePagerAdapter.SUB;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     FloatingActionButton fab;
     private ViewPager mPager;
-    private PagerAdapter mPagerAdapter;
+    protected PagerAdapter mPagerAdapter;
     int cPage = MAIN;
 
     @Override
