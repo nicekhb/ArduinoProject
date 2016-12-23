@@ -53,6 +53,7 @@ public class RunFragment extends Fragment implements LocationListener {
         txt_per = (TextView) view.findViewById(R.id.txt_per);
 
         Context main = getContext();
+        gmAsync = new GPSMapAsync((MainActivity) getContext());
 
         locationManager = (LocationManager) main.getSystemService(main.LOCATION_SERVICE);
         isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
