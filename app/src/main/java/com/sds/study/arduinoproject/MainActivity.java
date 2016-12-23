@@ -13,15 +13,16 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
+import static com.sds.study.arduinoproject.ScreenSlidePagerAdapter.EXERCISE;
+import static com.sds.study.arduinoproject.ScreenSlidePagerAdapter.MAIN;
+import static com.sds.study.arduinoproject.ScreenSlidePagerAdapter.MAP;
+import static com.sds.study.arduinoproject.ScreenSlidePagerAdapter.RUNNING;
+import static com.sds.study.arduinoproject.ScreenSlidePagerAdapter.SUB;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     FloatingActionButton fab;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
-    final int MAIN = 2;
-    final int SUB = 3;
-    final int EXERCISE = 4;
-    final int Running = 1;
-    final int MAP = 0;
     int cPage = MAIN;
 
     @Override
@@ -69,13 +70,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if (id == android.R.id.home) {
             if(((MainFragment)(((ScreenSlidePagerAdapter)mPagerAdapter).fragments[MAIN])).isRunMode) {
                 switch (cPage) {
-                    case Running:
+                    case RUNNING:
                         cPage = MAIN;
                         mPager.setCurrentItem(cPage);
                         setBackButton(false);
                         break;
                     case MAP:
-                        cPage = Running;
+                        cPage = RUNNING;
                         mPager.setCurrentItem(cPage);
                         fab.show();
                         break;
@@ -111,11 +112,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(((MainFragment)(((ScreenSlidePagerAdapter)mPagerAdapter).fragments[MAIN])).isRunMode) {
             switch (cPage) {
                 case MAIN:
-                    cPage = Running;
+                    cPage = RUNNING;
                     mPager.setCurrentItem(cPage);
                     setBackButton(true);
                     break;
-                case Running:
+                case RUNNING:
                     cPage = MAP;
                     mPager.setCurrentItem(cPage);
                     fab.hide();

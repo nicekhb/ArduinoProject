@@ -9,16 +9,21 @@ import android.support.v4.app.FragmentStatePagerAdapter;
  */
 
 public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+    final static int MAIN = 2;
+    final static int SUB = 3;
+    final static int EXERCISE = 4;
+    final static int RUNNING = 1;
+    final static int MAP = 0;
     Fragment[] fragments;
 
     public ScreenSlidePagerAdapter(FragmentManager fm) {
         super(fm);
         fragments = new Fragment[5];
-        fragments[2] = new MainFragment();
-        fragments[3] = new SubFragment();
-        fragments[4] = new ExerciseFragment();
-        fragments[1] = new RunFragment();
-        fragments[0] = new MapFragment();
+        fragments[MAIN] = new MainFragment();
+        fragments[SUB] = new SubFragment();
+        fragments[EXERCISE] = new ExerciseFragment();
+        fragments[RUNNING] = new RunFragment();
+        fragments[MAP] = new MapFragment();
     }
 
     @Override
