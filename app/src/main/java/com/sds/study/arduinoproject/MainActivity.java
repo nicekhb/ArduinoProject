@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
+
 import static com.sds.study.arduinoproject.ScreenSlidePagerAdapter.EXERCISE;
 import static com.sds.study.arduinoproject.ScreenSlidePagerAdapter.MAIN;
 import static com.sds.study.arduinoproject.ScreenSlidePagerAdapter.MAP;
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FloatingActionButton fab;
     private ViewPager mPager;
     protected PagerAdapter mPagerAdapter;
+    ArrayList<Fitness> list = new ArrayList<>();
     int cPage = MAIN;
 
     @Override

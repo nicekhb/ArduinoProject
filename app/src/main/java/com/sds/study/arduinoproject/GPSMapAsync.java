@@ -1,146 +1,123 @@
 package com.sds.study.arduinoproject;
 
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
+import static com.sds.study.arduinoproject.ScreenSlidePagerAdapter.MAP;
 import static com.sds.study.arduinoproject.ScreenSlidePagerAdapter.RUNNING;
 
-public class GPSMapAsync extends AsyncTask<String, Void, String> {
+public class GPSMapAsync extends AsyncTask<String, Void, List> {
     String TAG;
     RunFragment runFragment;
-    URL url;
-    HttpURLConnection con;
+    MapFragment mapFragment;
+
+    SQLiteDatabase db;
+
     TextView txt_date;
     TextView txt_time;
     TextView txt_lat;
     TextView txt_lng;
     TextView txt_per;
 
-    Polyline polyline;
     PolylineOptions polyOptions;
+    LatLng position;
     Location lastLocation;
-    SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-
+    //  SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+    ArrayList<LatLng> list;
+    String sql;
+    String sql2;
     public GPSMapAsync(MainActivity mainActivity) {
         TAG = this.getClass().getName();
-       //lastLocation = mainActivity.lastLocation;
-       runFragment = (RunFragment)(((ScreenSlidePagerAdapter)mainActivity.mPagerAdapter).fragments[RUNNING]);
-       if (lastLocation != null) {
-            Long currentTime = System.currentTimeMillis();
-            Log.d(TAG,"currentTIme??"+ currentTime.toString());
-            Date today = new Date(currentTime);
-            String now = format.format(today);
-            String[] day = now.split(" ");
-            Log.d(TAG, day[0].toString());
-            Log.d(TAG,"run txt_date:  "+ runFragment.txt_date);
-            Log.d(TAG,"run    :    "+ runFragment);
-            Log.d(TAG, "lat=" + lastLocation.getLatitude());
-            Log.d(TAG, "lng=" + lastLocation.getLongitude());
 
-        }
+        runFragment = (RunFragment)(((ScreenSlidePagerAdapter)mainActivity.mPagerAdapter).fragments[RUNNING]);
+        mapFragment=(MapFragment)(((ScreenSlidePagerAdapter)mainActivity.mPagerAdapter).fragments[MAP]);
+        lastLocation = runFragment.lastLocation;
+
+
     }
-
+//헤더파일 만들어서 보내는거
     protected void onPreExecute() {
+        Log.d(TAG, "on Pre Execute..  ");
         super.onPreExecute();
-
-        Log.d(TAG, "on pre Execute");
+        list = new ArrayList<LatLng>();
+        db = runFragment.db;
+        sql="insert into position(lat,lng) values(?,?)";
+        sql2="select * from position order by position_id desc";
     }
 
-    protected String doInBackground(String... params) {
-        BufferedReader bffr = null;
-        BufferedWriter bffw = null;
-        StringBuffer sb = null;
+    protected List doInBackground(String... params) {
+        Log.d(TAG, "do in background ...");
 
-        try {
-            url = new URL("http://192.168.0.3:9090/map/list.jsp");
-            con = (HttpURLConnection) url.openConnection();
+        Log.d(TAG, "db :   " + db);
+        Log.d(TAG, "lat :  " + params[0] + "  lng   :   " + params[1]);
+        db.execSQL(sql, new String[]{params[0], params[1]});
+        Cursor cursor=db.rawQuery(sql2, null);
+        if (cursor.moveToNext()) {
+            LatLng point=null;
+            Double lat = Double.parseDouble(cursor.getString(cursor.getColumnIndex("lat")));
+            Double lng = Double.parseDouble(cursor.getString(cursor.getColumnIndex("lng")));
+            point = new LatLng(lat,lng);
+            Log.d(TAG, " db select  lat: " + cursor.getString(cursor.getColumnIndex("lat")));
+            Log.d(TAG, " db  lng :   " + cursor.getString(cursor.getColumnIndex("lng")));
 
-            con.setRequestMethod("GET");
-            con.setDoInput(true);
-            con.setDoOutput(true);
+            list.add(point);
 
-            bffr = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
-            sb = new StringBuffer();
-
-            String jsonData = writeJSON(params[0], params[1], params[2], params[3]);
-            Log.d(TAG, jsonData);
-            //write 먼저
-
-            String data=null;
-            while ((data = bffr.readLine())!=null) {
-                Log.d(TAG, data);
-                sb.append(data);
-            }
-
-            con.getResponseCode();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
-        return "";
+        return list;
     }
-
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
     }
 
-    protected void onPostExecute(String s) {
-        try {
-            JSONObject jsonObject = new JSONObject(s);
-            String date = jsonObject.getString("date");
-            String time = jsonObject.getString("time");
-            Double lat = Double.parseDouble(jsonObject.getString("lat"));
-            Double lng = Double.parseDouble(jsonObject.getString("lng"));
-            LatLng position = new LatLng(lat, lng);
+    protected void onPostExecute(List list) {
 
-          /*  polyOptions.add(position);
-            polyOptions.color(Color.BLUE);
+        Log.d(TAG, "on post Execute");
 
-            polyline = mainActivity.googleMap.addPolyline(polyOptions);*/
-        //    mainActivity.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 13));
+        /*for (int i = 0; i < list.size(); i++) {
+            polyOptions = MapFragment.polylineOptions;
+            LatLng position = null;
+            position = (LatLng) list.get(i);
+            polyOptions.add(position);
 
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
-        Log.d(TAG, "on Execute");
-        super.onPostExecute(s);
+
+        //polyOptions = MapFragment.polylineOptions;
+        //polyOptions.add(position);
+        mapFragment.mMap.addPolyline(polyOptions);*/
+        //mapFragment.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
     }
 
-    public String writeJSON(String date, String time, String lat, String lng) {
-        StringBuffer sb = new StringBuffer();
-        sb.append("{");
-        sb.append("\"moveData\":{");
-        sb.append("\"date\":\""+date+"\",");
-        sb.append("\"time\":\""+time+"\",");
-        sb.append("\"lat\":\""+lat+"\",");
-        sb.append("\"lng\":\""+lng+"\"");
-        sb.append("}");
-        sb.append("}");
-
-        return sb.toString();
-    }
 
     public void setFragmentData(String date,String time, String lat, String lng){
         txt_date = runFragment.txt_date;
@@ -154,6 +131,5 @@ public class GPSMapAsync extends AsyncTask<String, Void, String> {
         txt_lat.setText(lat);
         txt_lng.setText(lng);
 
-        //거리; 구하기.....
     }
 }

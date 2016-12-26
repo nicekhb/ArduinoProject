@@ -1,7 +1,11 @@
 package com.sds.study.arduinoproject;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,15 +18,18 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
+
+import static com.sds.study.arduinoproject.ScreenSlidePagerAdapter.SUB;
 
 public class FitnessAsync extends AsyncTask<String, Void, String> {
     URL url;
     HttpURLConnection con;
+    MainActivity mainActivity;
     SubFragment subFragment;
 
-    public FitnessAsync(SubFragment subFragment) {
-        this.subFragment = subFragment;
+    public FitnessAsync(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
+        this.subFragment = (SubFragment)(((ScreenSlidePagerAdapter)mainActivity.mPagerAdapter).fragments[SUB]);
     }
 
     /*운동버튼 5개의 대한 연결페이지*/
@@ -76,7 +83,6 @@ public class FitnessAsync extends AsyncTask<String, Void, String> {
 
     //
     public void executeList(String s) {
-        ArrayList<Fitness> list = new ArrayList<>();
         try {
             JSONArray array = new JSONArray(s);
 
@@ -84,28 +90,36 @@ public class FitnessAsync extends AsyncTask<String, Void, String> {
                 Fitness fitness = new Fitness();
                 JSONObject obj = array.getJSONObject(i);
 
-                if ((obj.getString("partname")).equals("가슴")) {
-                    subFragment.et_bast.setText(obj.getString("title"));
-                } else if (obj.getString("partname").equals("허리")) {
-                    subFragment.et_low.setText(obj.getString("title"));
-                } else if ((obj.getString("partname")).equals("하체")) {
-                    subFragment.et_leg.setText(obj.getString("title"));
-                } else if ((obj.getString("partname")).equals("등")) {
-                    subFragment.et_back.setText(obj.getString("title"));
-                } else if ((obj.getString("partname")).equals("배")) {
-                    subFragment.et_body.setText(obj.getString("title"));
-                }
-
                 fitness.setPartname(obj.getString("partname"));
                 fitness.setTitle(obj.getString("title"));
                 fitness.setExercise(obj.getString("exercise"));
                 fitness.setCount(obj.getInt("count"));
 
-                list.add(fitness);
+                addTitleTextView(fitness.getTitle()+" ("+fitness.getPartname()+")");
+
+                mainActivity.list.add(fitness);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public void addTitleTextView(String title) {
+        //TextView 생성
+        TextView view1 = new TextView(subFragment.getContext());
+        view1.setText(title);
+        view1.setTextColor(Color.BLACK);
+        view1.setTextSize(20);
+
+
+        //layout_width, layout_height, gravity 설정
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER;
+        lp.topMargin = 65;
+        view1.setLayoutParams(lp);
+
+        //부모 뷰에 추가
+        subFragment.titleLayout.addView(view1);
     }
 }

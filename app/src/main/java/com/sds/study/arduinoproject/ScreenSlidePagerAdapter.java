@@ -4,6 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+
 /**
  * Created by student on 2016-12-13.
  */
@@ -18,12 +21,13 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
     public ScreenSlidePagerAdapter(FragmentManager fm) {
         super(fm);
+
         fragments = new Fragment[5];
         fragments[MAIN] = new MainFragment();
         fragments[SUB] = new SubFragment();
         fragments[EXERCISE] = new ExerciseFragment();
         fragments[RUNNING] = new RunFragment();
-        fragments[MAP] = new MapFragment();
+        fragments[MAP] = MapFragment.newInstance();
     }
 
     @Override
