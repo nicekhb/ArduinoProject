@@ -29,9 +29,10 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.text.SimpleDateFormat;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
-    protected GoogleMap mMap;
+    GoogleMap mMap;
     String TAG;
     static PolylineOptions polylineOptions;
+    GPSMapAsync2 gmAsync2;
 
     private static MapFragment mapFragment;
     public static MapFragment newInstance() {
@@ -61,6 +62,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         polylineOptions.color(Color.BLUE);
 
         myMAPF.getMapAsync(this);
+
+        gmAsync2 = new GPSMapAsync2((MainActivity) getContext());
+        gmAsync2.execute( );
 
     }
 
